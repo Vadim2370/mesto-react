@@ -7,13 +7,21 @@ function PopupWithForm({
   isOpen,
   onClose,
   buttonTitle,
+  buttonLoadingTitle,
+  onSubmit,
+  isValid,
+  isLoading,
 }) {
   return (
-    <section className={`popup popup-${name} ${isOpen && "popup_opened"}`}>
+    <section
+      className={`popup popup-${name} ${isOpen && "popup_opened"}`}
+      onClick={(evt) => evt.target === evt.currentTarget && onClose()}
+    >
       <div className="popup__container">
         <form
           className={`popup__form popup__form-${name}`}
           name={name}
+          onSubmit={onSubmit}
           noValidate
         >
           <button
@@ -25,10 +33,13 @@ function PopupWithForm({
           <h2 className="popup__title">{title}</h2>
           {children}
           <button
-            className={`popup__submit popup__submit-${name}`}
+            className={`popup__submit popup__submit-${name} ${
+              !isValid && "popup__submit_disabled"
+            }`}
             type="submit"
+            disabled={!isValid}
           >
-            {buttonTitle}
+            {isLoading ? buttonLoadingTitle : buttonTitle}
           </button>
         </form>
       </div>

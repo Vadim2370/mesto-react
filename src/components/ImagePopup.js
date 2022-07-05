@@ -1,9 +1,10 @@
-import React from "react";
+import { useEffect } from "react";
 
 function ImagePopup({ card, onClose }) {
   return (
     <section
       className={`popup popup_dark popup-image ${card && "popup_opened"}`}
+      onClick={(evt) => evt.target === evt.currentTarget && onClose()}
     >
       <figure className="popup__container-image">
         <button
